@@ -16,6 +16,12 @@ module.exports.run = function(message) {
 
     }
 
+    // Instruct user to use commands in the server if they are trying to use them in DMs
+    const verifyCmd = `${this.config.prefix}verify`
+    if(!message.guild && !message.author.bot && message.content.startsWith(verifyCmd)) {
+        return message.reply(`⛔ | The ${verifyCmd} command should be used only in server's #verify text channel!`);;
+    }
+
     // Check if message starts with prefix, is not sent by a bot and not in DMs
     if (!message.content.startsWith(this.config.prefix) || message.author.bot || !message.guild) return;
 
