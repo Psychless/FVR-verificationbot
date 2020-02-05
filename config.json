@@ -1,5 +1,5 @@
 {
-  "token": "Bot Token",
+  "token": "[TOKEN]",
   "prefix": "$",
   "deleteMessages": true,
   "presence": {
@@ -7,7 +7,12 @@
   },
 
   "servers": {
-
+    "664346939059470346": {
+      "verificationChannel": "674609290383851539",
+      "verifyRole": "674609338106773504",
+      "rulesChannel": "664346939059470352",
+      "readRulesRole": "674618860506316800"
+    }
   },
 
   "ignoreServers": [

@@ -4,11 +4,16 @@ const { RichEmbed } = require("discord.js");
 
 module.exports = async function(message) {
 
+    const serverConf = this.config.servers[message.guild.id];
+
     // Check if channel name is "verify" or in verificationChannels array
     if (message.channel.id !== (this.config.servers[(message.guild || {id: "0"}).id] || {verificationChannel: "0"}).verificationChannel && message.channel.name !== "verify") return;
 
     if (message.args.length === 0) {
         // No arguments provided
+
+        // Check if they have read and accepted rules
+        if (!message.member.roles.find(r => r.id === serverConf.readRulesRole)) return message.reply(`⛔ | Please read and react to the rules in the <#${serverConf.rulesChannel}> channel and then use ${this.config.prefix}verify again`);
 
         const captcha = randomBytes(32).toString("hex").substr(0, 6);
         const font = await Jimp.loadFont(Jimp.FONT_SANS_64_BLACK);
@@ -39,7 +44,8 @@ module.exports = async function(message) {
 
         if (message.args[0] !== captcha) return message.reply("⛔ | Invalid captcha!");
         else {
-            message.member.addRole(message.guild.roles.get(this.config.servers[message.guild.id].verifyRole)).then(() => {
+            message.member.addRole(message.guild.roles.get(serverConf.verifyRole)).then(() => {
+                message.member.removeRole(serverConf.readRulesRole);
                 message.reply("✅ | Successfully verified.");
             }).catch(console.error);
             this.query.delete(message.author.id);
