@@ -8,12 +8,12 @@
 
   "servers": {
     "664346939059470346": {
-      "verificationChannel": "674609290383851539",
-      "verifyRole": "674609338106773504",
-      "rulesChannel": "664346939059470352",
-      "rulesMsg": "674623271400112148",
+      "verificationChannel": "[CHANNEL ID]",
+      "verifyRole": "[ROLE ID]",
+      "rulesChannel": "[CHANNEL ID]",
+      "rulesMsg": "[MSG ID]",
       "rulesReadEmoji": "✅",
-      "rulesReadRole": "674618860506316800"
+      "rulesReadRole": "[ROLE ID]"
     }
   },
 
