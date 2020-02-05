@@ -45,6 +45,46 @@ fs.readdir("./commands/", (err, data) => {
     }
 });
 
+// Message rection event
+client.on('raw', event => {
+    const eventName = event.t;
+    if(eventName === 'MESSAGE_REACTION_ADD' || eventName === 'MESSAGE_REACTION_REMOVE') {
+        // Read rules role adding/removing
+        if(event.d.message_id === config.servers[event.d.guild_id].rulesMsg){
+                let reactionChannel = client.channels.get(event.d.channel_id);
+                if(reactionChannel.messages.has(event.d.message_id))
+                    return;
+                else {
+                    reactionChannel.fetchMessage(event.d.message_id)
+                    .then(msg => {
+                        const msgReaction = msg.reactions.get(event.d.emoji.name + ":" + event.d.emoji.id);
+                        const user = client.users.get(event.d.user_id);
+                        client.emit((eventName === 'MESSAGE_REACTION_ADD' ? 'messageReactionAdd' : 'messageReactionRemove'), msgReaction, user);
+                    })
+                    .catch(console.error);
+                }
+        }
+    }
+})
+
+client.on('messageReactionAdd', (reaction, user) => {
+    if(reaction.emoji.name === config.servers[reaction.message.guild.id].rulesReadEmoji){
+        const member = reaction.message.guild.members.find(member => member.id === user.id);
+        if(member) {
+            member.addRole(config.servers[reaction.message.guild.id].rulesReadRole);
+        }
+    }
+});
+
+client.on('messageReactionRemove', (reaction, user) => {
+	if(reaction.emoji.name === config.servers[reaction.message.guild.id].rulesReadEmoji){
+        const member = reaction.message.guild.members.find(member => member.id === user.id);
+        if(member) {
+            member.removeRole(config.servers[reaction.message.guild.id].rulesReadRole);
+        }
+    }
+});
+
 if (config.token === "Bot Token") {
     console.log("Looks like you forgot to put your token into the config.json file.");
 } else client.login(config.token);

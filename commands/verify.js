@@ -13,7 +13,7 @@ module.exports = async function(message) {
         // No arguments provided
 
         // Check if they have read and accepted rules
-        if (!message.member.roles.find(r => r.id === serverConf.readRulesRole)) return message.reply(`⛔ | Please read and react to the rules in the <#${serverConf.rulesChannel}> channel and then use ${this.config.prefix}verify again`);
+        if (!message.member.roles.find(r => r.id === serverConf.rulesReadRole)) return message.reply(`⛔ | Please read and react to the rules in the <#${serverConf.rulesChannel}> channel and then use ${this.config.prefix}verify again`);
 
         const captcha = randomBytes(32).toString("hex").substr(0, 6);
         const font = await Jimp.loadFont(Jimp.FONT_SANS_64_BLACK);
@@ -45,7 +45,7 @@ module.exports = async function(message) {
         if (message.args[0] !== captcha) return message.reply("⛔ | Invalid captcha!");
         else {
             message.member.addRole(message.guild.roles.get(serverConf.verifyRole)).then(() => {
-                message.member.removeRole(serverConf.readRulesRole);
+                message.member.removeRole(serverConf.rulesReadRole);
                 message.reply("✅ | Successfully verified.");
             }).catch(console.error);
             this.query.delete(message.author.id);

@@ -1,5 +1,5 @@
 {
-  "token": "[TOKEN]",
+  "token": "Bot Token",
   "prefix": "$",
   "deleteMessages": true,
   "presence": {
@@ -11,7 +11,9 @@
       "verificationChannel": "674609290383851539",
       "verifyRole": "674609338106773504",
       "rulesChannel": "664346939059470352",
-      "readRulesRole": "674618860506316800"
+      "rulesMsg": "674623271400112148",
+      "rulesReadEmoji": "✅",
+      "rulesReadRole": "674618860506316800"
     }
   },
 
