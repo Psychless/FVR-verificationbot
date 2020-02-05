@@ -39,7 +39,7 @@ module.exports = async function(message) {
 
         if (message.args[0] !== captcha) return message.reply("⛔ | Invalid captcha!");
         else {
-            message.member.addRole(this.config.servers[message.guild.id].verifyRole).then(() => {
+            message.member.addRole(message.guild.roles.get(this.config.servers[message.guild.id].verifyRole)).then(() => {
                 message.reply("✅ | Successfully verified.");
             }).catch(console.error);
             this.query.delete(message.author.id);

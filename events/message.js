@@ -7,8 +7,11 @@ module.exports.run = function(message) {
 
         // Wait 5 seconds if message was sent by the bot itself
         if (this.config.deleteMessages === true) {
-            if (message.author.id !== this.user.id) message.delete();
-            else message.delete(5000);
+            if (message.author.id !== this.user.id) {
+                message.delete();
+            } else {
+                message.delete(5000);
+            }
         }
 
     }
