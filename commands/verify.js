@@ -13,13 +13,16 @@ module.exports = async function(message) {
         const captcha = randomBytes(32).toString("hex").substr(0, 6);
         const font = await Jimp.loadFont(Jimp.FONT_SANS_64_BLACK);
         const image = await Jimp.read("./assets/noise.jpg");
-        image.print(font, 0, 0, captcha);
+        image.print(font, 0, 0, {
+            text: captcha,
+            alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
+            alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE
+        }, image.bitmap.width, image.bitmap.height);
 
         const buffer = await image.getBufferAsync(Jimp.MIME_JPEG);
         const embed = new RichEmbed()
             .setTitle("Verification")
-            .setDescription("This server is protected by [DiscordCaptcha](https://github.com/y21/discordcaptcha), an open-source project that prevents servers from being raided.\n" +
-                "Please solve this captcha by sending `" + this.config.prefix + "verify [code]` in <#" + message.channel.id + ">")
+            .setDescription("Please solve this captcha by sending `" + this.config.prefix + "verify [code]` in <#" + message.channel.id + ">")
             .attachFile({ attachment: buffer, name: "captcha.jpeg" })
             .setImage("attachment://captcha.jpeg");
         message.author.send(embed).catch(() => {
@@ -41,7 +44,6 @@ module.exports = async function(message) {
             }).catch(console.error);
             this.query.delete(message.author.id);
         }
-
     }
 };
 
