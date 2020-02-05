@@ -7,7 +7,7 @@
   },
 
   "servers": {
-    "664346939059470346": {
+    "[SERVER ID]": {
       "verificationChannel": "[CHANNEL ID]",
       "verifyRole": "[ROLE ID]",
       "rulesChannel": "[CHANNEL ID]",
