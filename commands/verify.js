@@ -58,7 +58,7 @@ module.exports = async function(message) {
 
             // Log successful user verification
             this.utils.logToChannel(this, serverConf.logChannels.usrVerif, `<@${message.author.id}> has been verified!`);
-        // }
+        }
     }
 };
 
