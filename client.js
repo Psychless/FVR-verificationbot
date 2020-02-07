@@ -93,6 +93,15 @@ client.on('messageReactionRemove', (reaction, user) => {
     }
 });
 
+client.on('guildMemberRemove', member => {
+    utils.logToChannel(client, config.servers[member.guild.id].logChannels.usrLeft, `**${member.user.tag}** has left the server! :confused:`);
+})
+
+client.on("error", (e) => console.error(e));
+client.on("warn", (e) => console.warn(e));
+
 if (config.token === "Bot Token") {
     console.log("Looks like you forgot to put your token into the config.json file.");
-} else client.login(config.token);
+} else {
+    client.login(config.token);
+}
