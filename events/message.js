@@ -3,15 +3,12 @@ module.exports.run = function(message) {
     if (this.config.ignoreServers.includes((message.guild || { id: "0" }).id)) return;
 
     // Delete message if it was sent in verification channel
-    if (message.channel.id === (this.config.servers[(message.guild || {id: "0"}).id] || {verificationChannel: "0"}).verificationChannel || message.channel.name === "verify") {
+    if (this.utils.isVerifyChannel(message)){
 
         // Wait 5 seconds if message was sent by the bot itself
         if (this.config.deleteMessages === true) {
-            if (message.author.id !== this.user.id) {
-                message.delete();
-            } else {
-                message.delete(5000);
-            }
+            const deleteTime = message.author.id !== this.user.id ? this.config.usrMsgDeleteTime : this.config.botMsgDeleteTime;
+            message.delete(deleteTime);
         }
 
     }
@@ -19,7 +16,7 @@ module.exports.run = function(message) {
     // Instruct user to use commands in the server if they are trying to use them in DMs
     const verifyCmd = `${this.config.prefix}verify`
     if(!message.guild && !message.author.bot && message.content.startsWith(verifyCmd)) {
-        return message.reply(`⛔ | The ${verifyCmd} command should be used only in server's #verify text channel!`);;
+        return message.reply(`${this.constants.BOT_PREFIX_ERROR}The ${verifyCmd} command should be used only in server's #verify text channel!`);;
     }
 
     // Check if message starts with prefix, is not sent by a bot and not in DMs
@@ -41,19 +38,19 @@ module.exports.run = function(message) {
     if (!command) return;
 
     // Check if command is enabled
-    if (command.enabled === false) return message.reply("⛔ | This command has been disabled.");
+    if (command.enabled === false) return message.reply(`${this.constants.BOT_PREFIX_ERROR}This command has been disabled.`);
 
     // Check if author is allowed to execute command
-    if (!configCommand) return message.reply("⛔ | Command not set in config.json file!");
+    if (!configCommand) return message.reply(`${this.constants.BOT_PREFIX_ERROR}Command not set in config.json file!`);
     if (configCommand.executors.length > 0 && !configCommand.executors.includes(message.author.id))
-        return message.reply("⛔ | You are not allowed to execute this command.");
+        return message.reply(`${this.constants.BOT_PREFIX_ERROR}You are not allowed to execute this command.`);
     if (configCommand.requiredPermissions.length > 0 && !configCommand.requiredPermissions.some(v => message.member.hasPermission(v.toUpperCase())))
-        return message.reply("⛔ | You are not allowed to execute this command.");
+        return message.reply(`${this.constants.BOT_PREFIX_ERROR}You are not allowed to execute this command.`);
 
     // Check args length
     const requiredArgs = command.info.args.filter(v => v.required);
     if (message.args.length < requiredArgs.length)
-        return message.reply(`⛔ | Invalid arguments: ${requiredArgs.length} are needed but ${message.args.length} were provided.`);
+        return message.reply(`${this.constants.BOT_PREFIX_ERROR}Invalid arguments: ${requiredArgs.length} are needed but ${message.args.length} were provided.`);
 
     // Run command
     command.call(this, message);

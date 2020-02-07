@@ -2,18 +2,21 @@
   "token": "Bot Token",
   "prefix": "$",
   "deleteMessages": true,
+  "usrMsgDeleteTime": 0,
+  "botMsgDeleteTime": 5000,
+  "captchaDeleteTime": 120000,
   "presence": {
 
   },
 
   "servers": {
-    "[SERVER ID]": {
-      "verificationChannel": "[CHANNEL ID]",
-      "verifyRole": "[ROLE ID]",
-      "rulesChannel": "[CHANNEL ID]",
-      "rulesMsg": "[MSG ID]",
+    "664346939059470346": {
+      "verificationChannel": "674609290383851539",
+      "verifyRole": "674609338106773504",
+      "rulesChannel": "664346939059470352",
+      "rulesMsg": "674623271400112148",
       "rulesReadEmoji": "✅",
-      "rulesReadRole": "[ROLE ID]"
+      "rulesReadRole": "674618860506316800"
     }
   },
 
@@ -22,22 +25,7 @@
   ],
 
   "commands": {
-    "ping": {
-      "executors": [],
-      "requiredPermissions": [],
-      "enabled": true
-    },
     "verify": {
-      "executors": [],
-      "requiredPermissions": [],
-      "enabled": true
-    },
-    "unverify": {
-      "executors": [],
-      "requiredPermissions": [],
-      "enabled": true
-    },
-    "version": {
       "executors": [],
       "requiredPermissions": [],
       "enabled": true

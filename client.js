@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const fs = require("fs");
 const config = require("./config.json");
+const constants = require("./utils/constants.js");
+const utils = require("./utils/utilities.js");
 const commands = new Map();
 
 const client = new Discord.Client({ disableEveryone: true });
@@ -11,6 +13,12 @@ Object.defineProperties(client, {
     },
     config: {
         value: config
+    },
+    constants: {
+        value: constants
+    },
+    utils: {
+        value: utils
     },
     query: {
         value: new Map()
