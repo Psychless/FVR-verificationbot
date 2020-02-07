@@ -55,7 +55,10 @@ module.exports = async function(message) {
                 message.reply(`${this.constants.BOT_PREFIX_SUCCESS}Successfully verified.`);
             }).catch(console.error);
             this.query.delete(message.author.id);
-        }
+
+            // Log successful user verification
+            this.utils.logToChannel(this, serverConf.logChannels.usrVerif, `<@${message.author.id}> has been verified!`);
+        // }
     }
 };
 

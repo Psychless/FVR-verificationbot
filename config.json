@@ -16,7 +16,11 @@
       "rulesChannel": "664346939059470352",
       "rulesMsg": "674623271400112148",
       "rulesReadEmoji": "✅",
-      "rulesReadRole": "674618860506316800"
+      "rulesReadRole": "674618860506316800",
+      "logChannels": {
+        "usrVerif": "664351151432663040",
+        "usrLeft": "664351151432663040"
+      }
     }
   },
 

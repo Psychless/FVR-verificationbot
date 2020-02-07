@@ -4,13 +4,10 @@ module.exports.run = function(message) {
 
     // Delete message if it was sent in verification channel
     if (this.utils.isVerifyChannel(message)){
-
-        // Wait 5 seconds if message was sent by the bot itself
         if (this.config.deleteMessages === true) {
             const deleteTime = message.author.id !== this.user.id ? this.config.usrMsgDeleteTime : this.config.botMsgDeleteTime;
             message.delete(deleteTime);
         }
-
     }
 
     // Instruct user to use commands in the server if they are trying to use them in DMs
