@@ -1,5 +1,4 @@
 const { randomBytes } = require("crypto");
-const Jimp = require("jimp");
 const { RichEmbed } = require("discord.js");
 
 module.exports = async function(message) {
@@ -18,26 +17,22 @@ module.exports = async function(message) {
 
         // Generate captcha
         const captcha = randomBytes(32).toString("hex").substr(0, 6);
-        const font = await Jimp.loadFont(Jimp.FONT_SANS_64_BLACK);
-        const image = await Jimp.read("./assets/noise.jpg");
-        image.print(font, 0, 0, {
-            text: captcha,
-            alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
-            alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE
-        }, image.bitmap.width, image.bitmap.height);
-
-        // Send captcha
-        const buffer = await image.getBufferAsync(Jimp.MIME_JPEG);
-        const embed = new RichEmbed()
+        await this.utils.getCaptchaImg(captcha).then((image) => {
+            // Send captcha
+            const embed = new RichEmbed()
             .setTitle("Verification")
-            .setDescription("Please solve this captcha by sending `" + this.config.prefix + "verify [code]` in <#" + message.channel.id + ">")
-            .attachFile({ attachment: buffer, name: "captcha.jpeg" })
+            .setDescription(`Please solve this captcha by sending \`${this.config.prefix}verify [code]\` in <#${message.channel.id}>`)
+            .attachFile({ attachment: image, name: "captcha.jpeg" })
             .setImage("attachment://captcha.jpeg");
-        message.author.send(embed).then(sent => sent.delete(this.config.captchaDeleteTime)).catch(() => {
-            message.reply(`${this.constants.BOT_PREFIX_ERROR}Could not send captcha, maybe you have Direct Messages disabled?`);
-        });
+            message.author.send(embed).then(sent => sent.delete(this.config.captchaDeleteTime)).catch(() => {
+                message.reply(`${this.constants.BOT_PREFIX_ERROR}Could not send captcha, maybe you have DMs disabled?`);
+            });
 
-        this.query.set(message.author.id, captcha);
+            this.query.set(message.author.id, captcha);
+        }).catch((e) => {
+            console.error(e);
+            return message.reply(`${this.constants.BOT_PREFIX_ERROR}Error encountered while generating captcha. Contact server admin!`);
+        });
     } else {
         // Check if user has requested captcha
         const captcha = this.query.get(message.author.id);

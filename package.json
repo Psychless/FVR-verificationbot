@@ -13,6 +13,7 @@
     "eslint": "^6.8.0",
     "jimp": "^0.6.4",
     "moment": "^2.24.0",
-    "node-fetch": "^2.3.0"
+    "node-fetch": "^2.3.0",
+    "zoia-captcha": "^1.0.4"
   }
 }
