@@ -8,7 +8,7 @@ module.exports = {
             return false;
 
         const serverConf = config.servers[message.guild.id];
-        return message.channel.id === serverConf.verificationChannel || message.channel.name === "verify";
+        return message.channel.id === serverConf.verification.verifyChannel || message.channel.name === "verify";
     },
     logToChannel: function(client, channelID, text) {
         const timestamp = moment().format("DD/MM/YYYY HH:mm:ss");

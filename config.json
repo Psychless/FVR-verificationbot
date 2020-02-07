@@ -11,15 +11,29 @@
 
   "servers": {
     "664346939059470346": {
-      "verificationChannel": "674609290383851539",
-      "verifyRole": "674609338106773504",
-      "rulesChannel": "664346939059470352",
-      "rulesMsg": "674623271400112148",
-      "rulesReadEmoji": "✅",
-      "rulesReadRole": "674618860506316800",
-      "logChannels": {
-        "usrVerif": "664351151432663040",
-        "usrLeft": "664351151432663040"
+      "verification": {
+        "verifyChannel": "674609290383851539",
+        "verifyRole": "674609338106773504",
+        "rulesChannel": "664346939059470352",
+        "rulesMsg": "674623271400112148",
+        "rulesReadEmoji": "✅",
+        "rulesReadRole": "674618860506316800"
+      },
+      "logging": {
+        "usrVerifChannel": "664351151432663040",
+        "usrLeftChannel": "664351151432663040"
+      },
+      "serverStats": {
+        "updateInterval": 10000,
+        "totalUsersChannel" : "675327225171542054",
+        "onlineUsersChannel" : "675327246482800671",
+        "offlineUsersChannel" : "675327277776764938",
+        "botUsersChannel" : "675327292553297947",
+        "botUsersRole" : "675312857834979357",
+        "totalUsersPrefix" : "👥 Total Members: ",
+        "onlineUsersPrefix" : "🏃 Online: ",
+        "offlineUsersPrefix" : "💤 Offline: ",
+        "botUsersPrefix" : "🔌 Bots: "
       }
     }
   },

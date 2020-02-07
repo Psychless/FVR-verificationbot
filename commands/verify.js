@@ -12,8 +12,8 @@ module.exports = async function(message) {
 
     if (message.args.length === 0) {
         // Check if they have read and accepted rules
-        if (!message.member.roles.find(r => r.id === serverConf.rulesReadRole)) {
-            return message.reply(`${this.constants.BOT_PREFIX_ERROR}Please read and react to the rules in the <#${serverConf.rulesChannel}> channel and then use ${this.config.prefix}verify again`);
+        if (!message.member.roles.find(r => r.id === serverConf.verification.rulesReadRole)) {
+            return message.reply(`${this.constants.BOT_PREFIX_ERROR}Please read and react to the rules in the <#${serverConf.verification.rulesChannel}> channel and then use ${this.config.prefix}verify again`);
         }
 
         // Generate captcha
@@ -50,14 +50,14 @@ module.exports = async function(message) {
             return message.reply(`${this.constants.BOT_PREFIX_ERROR}Invalid captcha!`);
         } else {
             // Add 'verified' role, remove 'read rules' role
-            message.member.addRole(message.guild.roles.get(serverConf.verifyRole)).then(() => {
-                message.member.removeRole(serverConf.rulesReadRole);
+            message.member.addRole(message.guild.roles.get(serverConf.verification.verifyRole)).then(() => {
+                message.member.removeRole(serverConf.verification.rulesReadRole);
                 message.reply(`${this.constants.BOT_PREFIX_SUCCESS}Successfully verified.`);
             }).catch(console.error);
             this.query.delete(message.author.id);
 
             // Log successful user verification
-            this.utils.logToChannel(this, serverConf.logChannels.usrVerif, `<@${message.author.id}> has been verified!`);
+            this.utils.logToChannel(this, serverConf.logging.usrVerifChannel, `<@${message.author.id}> has been verified!`);
         }
     }
 };
